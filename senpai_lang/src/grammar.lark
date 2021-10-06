@@ -1,0 +1,88 @@
+
+start: instruction+
+
+instruction: declaration
+           | assignment
+           | stack_op
+           | call
+           | if_block
+           | loop
+           | function_definition
+		   | import_statement
+		   | transfer_top
+		   | delete_var
+
+%ignore /[ \t\n\f\r]+|#.*/
+%import common.CNAME -> NAME
+%import common.NUMBER -> NUMBER
+%import python.STRING -> STRING
+
+string: STRING // /".*?(?<!\\)"/
+declaration: "Senpai? Can I see your "name"?"
+assignment: "Your"name" is very " expression"!" 
+
+expression: sum
+?sum: product
+        | sum "and" product   -> add
+        | sum "minus" product   -> sub
+        | sum "combined" product -> bit_and
+        | sum "or" product -> bit_or
+        | sum "exclusively or" -> xor
+        | sum "is equal to" product -> equality
+		| sum "is not equal to" product -> inequality
+        | sum "is smaller than" product -> less_than
+        | sum "is greater than" product -> greater_than
+        | sum "is less than or equal to" product -> less_than_or_equals
+        | sum "is greater than or equal to" product -> greater_than_or_equals
+        | sum "either or" product -> logical_or
+		| sum "and also" product -> logical_and
+		
+?product: atom
+        | product "times" atom  -> mul
+        | product "divided by" atom  -> div
+		| product "mod" atom -> modulus
+
+?atom: NUMBER           -> number
+        | "negative" atom         -> neg
+		| "flipped" atom         -> bit_not
+		| "[" sum "]" -> char_convert
+        | "(" sum ")"
+		| name
+		| string
+
+stack_op: rot2
+        | rot3
+        | pop
+        | push
+        | switch_stack
+
+push: "Show me your "name"!" 
+pop: "I don't like it anymore!"
+rot2: "Let's switch things up a bit!"
+rot3: "Let's really switch things up!"
+switch_stack: "Let's take it to the" name"!"
+
+call: "Notice me, senpai"[/!+/]
+
+bool: "likey" -> true
+    | "no-likey" -> false
+
+else: "Otherwise:" instruction+"Let's move on now!" 
+
+if_block: "If you "bool expression":" instruction+"Let's move on now!" -> if_block
+         |"If you "bool expression":" instruction+ else-> if_else_block
+loop: "Let's keep this going as long as you" bool expression":" instruction+"We can stop now!"
+
+function_args: name
+            | name "and" name
+            | (name",")+ "and" name
+function_body: instruction+
+function_definition: name"is my idea!" "It needs" function_args"to do it!""Here it is:" function_body "That's it!"
+        | name"is my idea!""Here it is:" function_body "That's it!"
+
+import_statement: "Senpai? Do you see" string"?" 
+
+transfer_top: "Let's bring this to"name"!"
+delete_var: "Get rid of" name"!"
+
+name: NAME

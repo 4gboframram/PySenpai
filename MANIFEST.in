@@ -1,0 +1,3 @@
+include senpai_lang/src/grammar.lark
+graft senpai_lang/lib
+graft senpai_lang/examples

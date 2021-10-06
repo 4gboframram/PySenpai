@@ -1,6 +1,7 @@
 # Senpai: A dynamically-typed, Stack-Based Esolang
 - For general info about the language, visit the [esolang wiki page](https://esolangs.org/wiki/Senpai)
 - This document is about implementation-specific details
+
 ## Implementation Features
 - An implementation of the Senpai language purely interpreted in Python
 - A simple Python API to create functions for the Senpai interpreter
@@ -9,6 +10,9 @@
 - A 100x slower than Python run speed (Yeah, I'm sorry)
 - Only a single dependency outside of the Python standard library (Lark) that can be installed with `pip install lark`
 - A probably slightly buggy interpreter.
+
+## Installation
+- This implementation of the `Senpai` language can be installed with `pip` using `pip install senpai-lang`
 
 ## Commandline Usage
 - To use, use `python -m senpai_lang [commands]`
